@@ -44,8 +44,8 @@
   var pdfHref = '';
 
   function openFrom(trigger, triggerMode, href){
-    var slot = trigger.querySelector('.upload-slot');
-    var img = trigger.querySelector('img');
+    var slot = trigger.classList.contains('upload-slot') ? trigger : trigger.querySelector('.upload-slot');
+    var img = slot ? slot.querySelector('img') : null;
     if(!slot || !slot.classList.contains('has-image') || !img) return;
     mode = triggerMode;
     pdfHref = href || '';
