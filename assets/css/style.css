@@ -114,47 +114,37 @@ p:last-child{ margin-bottom:0; }
   box-shadow:0 0 0 3px rgba(224,168,104,0.22);
   flex:none;
 }
+.nav-links{ display:flex; gap:28px; list-style:none; margin:0; padding:0; font-size:14px; }
+.nav-links a{ text-decoration:none; color:#d8c6ac; padding:6px 0; border-bottom:1px solid transparent; transition:border-color .2s, color .2s; }
+.nav-links a:hover{ color:var(--clay-soft); border-color:var(--clay-soft); }
+@media (max-width:900px){
+  .nav-links{ display:none; }
+}
 @media (max-width:640px){
   .brand{ font-size:15px; }
 }
 
-/* ---------------------------- side scroll-spy nav (vertical text rail) ---------------------------- */
+/* ---------------------------- side scroll-spy nav (dots) ---------------------------- */
 .side-nav{
-  position:fixed; right:0; top:50%; transform:translateY(-50%);
-  display:block;
+  position:fixed; right:24px; top:50%; transform:translateY(-50%);
+  display:flex; flex-direction:column; gap:13px;
   z-index:45;
-  max-height:86vh; overflow-y:auto;
-  padding:16px 8px;
-  background:rgba(var(--paper-rgb),0.88);
-  backdrop-filter:blur(8px);
-  border:1px solid var(--stone-line);
-  border-right:none;
-  border-radius:8px 0 0 8px;
-  scrollbar-width:none;
 }
-.side-nav::-webkit-scrollbar{ display:none; }
 .side-nav a{
-  writing-mode:vertical-rl;
-  text-orientation:mixed;
-  text-decoration:none;
-  font-size:13px;
-  font-weight:600;
-  letter-spacing:0.14em;
-  color:var(--ink-soft);
-  padding:9px 6px;
-  margin:0 auto 2px;
-  border-radius:4px;
-  white-space:nowrap;
-  display:block;
-  width:fit-content;
-  transition:color .2s ease, background .2s ease;
+  width:9px; height:9px; border-radius:50%;
+  background:var(--stone);
+  display:block; position:relative;
+  transition:background .2s ease, transform .2s ease;
 }
-.side-nav a:last-child{ margin-bottom:0; }
-.side-nav a:hover{ color:var(--amber-dark); }
-.side-nav a.active{
-  color:var(--paper);
-  background:var(--amber-dark);
+.side-nav a:hover, .side-nav a.active{ background:var(--amber); transform:scale(1.4); }
+.side-nav a .tip{
+  position:absolute; right:20px; top:50%; transform:translateY(-50%);
+  white-space:nowrap; font-size:12px; font-weight:600;
+  background:var(--coffee-900); color:var(--paper);
+  padding:5px 10px; border-radius:4px;
+  opacity:0; pointer-events:none; transition:opacity .2s ease;
 }
+.side-nav a:hover .tip{ opacity:1; }
 @media (max-width:900px){ .side-nav{ display:none; } }
 
 /* ---------------------------- hero / dark bands ---------------------------- */
@@ -185,11 +175,11 @@ p:last-child{ margin-bottom:0; }
 }
 .hero .wrap{ position:relative; z-index:1; }
 .hero-grid{
-  display:grid; grid-template-columns:1.3fr 1fr; gap:44px; align-items:center;
+  display:grid; grid-template-columns:1.7fr 0.85fr; gap:40px; align-items:center;
 }
 @media (max-width:860px){
   .hero-grid{ grid-template-columns:1fr; }
-  .hero-image{ order:2; max-width:320px; }
+  .hero-image{ order:2; max-width:280px; }
 }
 .hero h1{
   font-size:clamp(30px, 4.4vw, 50px);
@@ -264,8 +254,7 @@ section{ padding:74px 0; }
 .path-node h4{ font-size:18px; margin-bottom:8px; }
 .path-node p{ font-size:14.8px; }
 
-.timeline-photo{ margin-top:48px; padding-left:34px; display:flex; flex-direction:column; align-items:flex-start; }
-@media (max-width:600px){ .timeline-photo{ padding-left:0; } }
+.timeline-photo{ margin-top:14px; display:flex; flex-direction:column; align-items:flex-end; }
 
 /* ---------------------------- cards ---------------------------- */
 .card-grid{
@@ -357,15 +346,15 @@ section{ padding:74px 0; }
 .figure figcaption{ font-size:12.5px; color:var(--ink-soft); margin-top:8px; }
 
 .site-gallery{
-  display:grid; grid-template-columns:1fr 1fr; gap:14px;
+  display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px;
   margin:30px 0;
 }
-@media (max-width:720px){ .site-gallery{ grid-template-columns:1fr; } }
+@media (max-width:760px){ .site-gallery{ grid-template-columns:1fr; } }
 .gallery-item{ display:flex; flex-direction:column; gap:9px; }
-.gallery-item.wide{ grid-column:1 / -1; }
 .gallery-caption{
   font-size:13px; font-weight:600; color:var(--ink-soft); margin:0;
 }
+.gallery-item .upload-slot.has-image{ cursor:zoom-in; }
 
 /* ---------------------------- people grid (interview subjects) ---------------------------- */
 .people-grid{
@@ -397,6 +386,8 @@ section{ padding:74px 0; }
   width:100%; height:100%; object-fit:cover; display:none;
 }
 .upload-slot.has-image{ border-style:solid; background:none; }
+.upload-slot.frameless{ border:none; }
+.upload-slot.frameless.has-image{ border:none; }
 .upload-slot.has-image img{ display:block; }
 .upload-slot.has-image .upload-placeholder{ display:none; }
 .upload-placeholder{

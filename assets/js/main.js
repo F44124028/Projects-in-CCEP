@@ -31,20 +31,27 @@
   });
 })();
 
-// Poster lightbox — click the thumbnail to zoom, only once a real image
-// has loaded into its upload-slot (placeholder clicks do nothing).
+// Lightbox — shared by the 3 site-gallery photos (click to zoom in/out) and
+// the poster (click to open the full PDF in a new tab instead of zooming).
+// Only fires once a real image has loaded into its upload-slot.
 (function(){
-  var trigger = document.querySelector('[data-lightbox]');
   var lightbox = document.querySelector('.lightbox');
-  if(!trigger || !lightbox) return;
+  if(!lightbox) return;
   var lbImg = lightbox.querySelector('img');
+  var lbHint = lightbox.querySelector('.lightbox-hint');
   var closeBtn = lightbox.querySelector('.lightbox-close');
+  var mode = 'zoom';
+  var pdfHref = '';
 
-  function open(){
+  function openFrom(trigger, triggerMode, href){
     var slot = trigger.querySelector('.upload-slot');
     var img = trigger.querySelector('img');
     if(!slot || !slot.classList.contains('has-image') || !img) return;
+    mode = triggerMode;
+    pdfHref = href || '';
     lbImg.src = img.src;
+    lbImg.classList.remove('zoomed');
+    lbHint.textContent = mode === 'pdf' ? '點擊圖片查看完整 PDF ↗' : '點擊圖片可再放大看細節';
     lightbox.classList.add('open');
   }
   function close(){
@@ -52,9 +59,22 @@
     lbImg.classList.remove('zoomed');
     lbImg.src = '';
   }
-  trigger.addEventListener('click', open);
+
+  document.querySelectorAll('[data-lightbox]').forEach(function(trigger){
+    trigger.addEventListener('click', function(){ openFrom(trigger, 'zoom'); });
+  });
+  document.querySelectorAll('[data-lightbox-pdf]').forEach(function(trigger){
+    trigger.addEventListener('click', function(){
+      openFrom(trigger, 'pdf', trigger.getAttribute('data-lightbox-pdf'));
+    });
+  });
+
   lbImg.addEventListener('click', function(e){
     e.stopPropagation();
+    if(mode === 'pdf'){
+      if(pdfHref) window.open(pdfHref, '_blank', 'noopener');
+      return;
+    }
     lbImg.classList.toggle('zoomed');
   });
   lightbox.addEventListener('click', function(e){
