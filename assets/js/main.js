@@ -31,16 +31,6 @@
   });
 })();
 
-// Top nav hides after scrolling past the hero; side dot-nav takes over.
-(function(){
-  var threshold = 140;
-  function onScroll(){
-    document.body.classList.toggle('scrolled', window.scrollY > threshold);
-  }
-  window.addEventListener('scroll', onScroll, { passive:true });
-  onScroll();
-})();
-
 // Poster lightbox — click the thumbnail to zoom, only once a real image
 // has loaded into its upload-slot (placeholder clicks do nothing).
 (function(){
@@ -59,9 +49,14 @@
   }
   function close(){
     lightbox.classList.remove('open');
+    lbImg.classList.remove('zoomed');
     lbImg.src = '';
   }
   trigger.addEventListener('click', open);
+  lbImg.addEventListener('click', function(e){
+    e.stopPropagation();
+    lbImg.classList.toggle('zoomed');
+  });
   lightbox.addEventListener('click', function(e){
     if(e.target === lbImg) return;
     close();
