@@ -592,3 +592,10 @@ footer.site-footer a:hover{ text-decoration:underline; }
 }
 .two-col{ display:grid; grid-template-columns:1fr 1fr; gap:40px; }
 @media (max-width:760px){ .two-col{ grid-template-columns:1fr; } }
+
+@media (max-width:640px){
+  .hero{ padding:56px 0 48px; }
+  section{ padding:48px 0; }
+  .wrap{ padding:0 20px; }
+  .lightbox{ padding:20px; }
+}
