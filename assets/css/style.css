@@ -213,6 +213,9 @@ p:last-child{ margin-bottom:0; }
   margin:22px 0 26px;
   max-width:16.5em;
 }
+@media (min-width:860px){
+  .hero h1{ white-space:nowrap; }
+}
 .hero h1 .accent{ color:var(--clay-soft); }
 .hero-sub{
   color:#ddcdb4;
